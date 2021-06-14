@@ -23,11 +23,12 @@
                     @method('PUT')
                 @endif
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name" name="name" value="{{ isset($category) ? $category->name : null }}">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" value="{{ isset($category) ? $category->name : null }}">
                 </div>
 
                 <div class="form-group d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-success btn-sm">{{ isset($category) ? 'Update Category' : 'Create Category' }} </button>
                 </div>
             </form>
         </div>

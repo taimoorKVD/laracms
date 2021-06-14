@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(!empty($categories))
+                    @if(count($categories) > 0)
                         @foreach($categories as $category)
                             <tr>
                                 <td>{{ $category->name }}</td>
@@ -34,7 +34,7 @@
                 </tbody>
             </table>
         </div>
-        @if(!empty($categories))
+        @if(count($categories) > 0)
             <div class="card-footer">
                 {{ $categories->links() }}
             </div>

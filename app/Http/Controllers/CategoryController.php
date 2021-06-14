@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Categories\CheckCategoryRequest;
+use App\Http\Requests\CheckCategoryRequest;
 
 use Illuminate\Http\Request;
 
