@@ -4,8 +4,8 @@
 
     <div class="card">
         <div class="card-header">
-            <h5 class="float-left">{{ isset($category) ? 'Edit Category' : 'Create New Category' }} </h5>
-            <a href="{{ route('categories.index') }}" class="btn btn-primary btn-sm float-right">Back</a>
+            <h5 class="float-left">{{ isset($tag) ? 'Edit Tag' : 'Create New Tag' }} </h5>
+            <a href="{{ route('tags.index') }}" class="btn btn-primary btn-sm float-right">Back</a>
         </div>
         <div class="card-body">
             @if($errors->any())
@@ -18,18 +18,18 @@
                 </div>
             @endif
 
-            <form action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}" method="POST">
+            <form action="{{ isset($tag) ? route('tags.update', $tag->id) : route('tags.store') }}" method="POST">
                 @csrf
-                @if(isset($category))
+                @if(isset($tag))
                     @method('PUT')
                 @endif
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" value="{{ isset($category) ? $category->name : null }}">
+                    <input type="text" class="form-control" name="name" value="{{ isset($tag) ? $tag->name : null }}">
                 </div>
 
                 <div class="form-group d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success btn-sm">{{ isset($category) ? 'Update Category' : 'Create Category' }} </button>
+                    <button type="submit" class="btn btn-success btn-sm">{{ isset($tag) ? 'Update Tag' : 'Create Tag' }} </button>
                 </div>
             </form>
         </div>

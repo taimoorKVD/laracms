@@ -76,11 +76,17 @@
             @auth
                 <div class="container">
 
-                    @if(session()->has('message'))
-                        <div class="alert alert-success">
-                            {{ session()->get('message') }}
+                    @if(session()->has('error-message'))
+                        <div class="alert alert-warning">
+                            {{ session()->get('error-message') }}
                         </div>
                     @endif
+
+                        @if(session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
 
                     <div class="row">
                         <div class="col-md-4">
@@ -90,6 +96,9 @@
                                 </li>
                                 <li class="list-group-item">
                                     <a href="{{ route('categories.index') }}">Categories</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('tags.index') }}">Tags</a>
                                 </li>
                             </ul>
 
@@ -122,6 +131,7 @@
         setTimeout(function(){
             $('.alert-danger').hide(1000);
             $('.alert-success').hide(1000);
+            $('.alert-warning').hide(1000);
         }, 3000);
     });
 </script>

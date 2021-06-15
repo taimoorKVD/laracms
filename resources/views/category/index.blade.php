@@ -12,6 +12,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>No. Of Posts</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                         @foreach($categories as $category)
                             <tr>
                                 <td>{{ $category->name }}</td>
+                                <td> <span class="badge badge-info">{{ $category->posts->count() }}</span> </td>
                                 <td>
                                     <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm mr-2">Edit</a>
                                     <button class="btn btn-danger btn-sm mr-2" onclick="handleDelete( {{ $category->id }} )">Delete</button>
@@ -28,7 +30,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="2">No record found!</td>
+                            <td colspan="3" align="center">No record found!</td>
                         </tr>
                     @endif
                 </tbody>

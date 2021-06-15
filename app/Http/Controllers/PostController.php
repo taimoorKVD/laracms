@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 use App\Http\Requests\CheckPostRequest;
 
 use App\Models\Post;
+use App\Models\Category;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('verifyCategoryCount')->only(['create','store']);
+    }
+
     public function index()
     {
         return view('post.index')->with('posts', Post::orderBy('id', 'desc')->paginate(7));
@@ -17,7 +26,7 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('post.create');
+        return view('post.create')->withCategories(Category::all())->withTags(Tag::all());
     }
 
     public function store(CheckPostRequest $cpr)
@@ -28,9 +37,13 @@ class PostController extends Controller
         $post->title = request()->title;
         $post->description = request()->description;
         $post->content = request()->content;
+        $post->category_id = request()->category_id;
         $post->published_at = request()->published_at;
         $post->image = $image;
         $post->save();
+
+        if(request()->tags_id)
+            $post->tags()->attach(request()->tags_id);
 
         return redirect()
             ->route('posts.index')
@@ -44,12 +57,12 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('post.create')->withPost($post);
+        return view('post.create')->withPost($post)->withCategories(Category::all())->withTags(Tag::all());
     }
 
     public function update(CheckPostRequest $cpr, Post $post)
     {
-        $data = request()->only('title', 'description', 'content', 'published');
+        $data = request()->only('title', 'description', 'content', 'category_id', 'published');
 
         if(request()->hasFile('image'))
 
@@ -61,6 +74,10 @@ class PostController extends Controller
 
         // add image path to above data array
         $data['image'] = $image;
+
+        // syn the tags with the post
+        if(request()->tags_id)
+            $post->tags()->sync(request()->tags_id);
 
         // update post data into database
         $post->update($data);
@@ -85,7 +102,7 @@ class PostController extends Controller
             $post->delete();
         }
         return redirect()
-            ->route('posts.index')
+            ->back()
             ->with('message', $msg);
     }
 

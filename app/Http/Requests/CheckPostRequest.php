@@ -30,6 +30,7 @@ class CheckPostRequest extends FormRequest
                     'title' => 'required|unique:posts|min:3',
                     'description' => 'required',
                     'content' => 'required',
+                    'category_id' => 'required',
                     'published_at' => 'required',
                     'image' => 'required|image',
                 ];
@@ -40,6 +41,7 @@ class CheckPostRequest extends FormRequest
                     'title' => 'required|min:3|unique:posts,title,'.$this->post->id,
                     'description' => 'required',
                     'content' => 'required',
+                    'category_id' => 'required',
                     'published_at' => 'required',
                     'image' => 'required|image',
                 ];

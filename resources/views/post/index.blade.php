@@ -13,6 +13,7 @@
                 <tr>
                     <th>Image</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -22,6 +23,9 @@
                         <tr>
                             <td><img src="{{ url('storage/app/'.$post->image) }}" alt="Post Image" class="rounded" width="100"></td>
                             <td>{{ $post->title }}</td>
+                            <td>
+                                <a href="{{ route('categories.edit', $post->category->id) }}">{{ $post->category->name }}</a>
+                            </td>
                             <td>
                                 <button class="btn btn-danger btn-sm mr-2 float-right" onclick="handleDelete( {{ $post->id }} )">
                                     {{ $post->trashed() ? 'Delete' : 'Trash' }}
@@ -40,7 +44,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="3" align="center">No record found!</td>
+                        <td colspan="4" align="center">No record found!</td>
                     </tr>
                 @endif
                 </tbody>

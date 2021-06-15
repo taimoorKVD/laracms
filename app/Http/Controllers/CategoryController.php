@@ -53,7 +53,13 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if($category->posts->count() > 0)
+            return redirect()
+                ->back()
+                ->with('error-message', 'Category cannot be deleted, because it is associated to some posts.');
+
         $category->delete();
+
         return redirect()
             ->back()
             ->with('message', 'Category deleted successfully');

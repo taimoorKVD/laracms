@@ -39,6 +39,36 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" name="category_id" id="category_id">
+                        <option disabled selected>Choose an option</option>
+                        @if($categories->count() > 0)
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ isset($post) && $post->category_id == $category->id ? 'selected' : null }}>{{ $category->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+
+                @if($tags->count() > 0)
+                <div class="form-group">
+                    <label for="tag">Tags</label>
+                    <select class="form-control js-example-basic-multiple" name="tags_id[]" id="tags_id" multiple="">
+                            <option disabled>Choose tags</option>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}"
+                                    @if(isset($post))
+                                        @if($post->hasTag($tag->id))
+                                            selected
+                                            @endif
+                                        @endif
+                                >{{ $tag->name }}</option>
+                            @endforeach
+                    </select>
+                </div>
+                @endif
+
+                <div class="form-group">
                     <label for="published_at">Published At</label>
                     <input type="text" class="form-control" name="published_at" id="published_at" value="{{ isset($post) ? $post->published_at : null }}">
                 </div>
@@ -63,14 +93,19 @@
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr("#published_at", {
             enableTime:true,
+        });
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
         });
     </script>
 @endsection
