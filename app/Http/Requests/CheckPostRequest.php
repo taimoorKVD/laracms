@@ -23,11 +23,32 @@ class CheckPostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required|unique:posts|min:3',
-            'description' => 'required',
-            'content' => 'required',
-            'image' => 'required|image',
-        ];
+        switch ($this->method())
+        {
+            case 'POST';
+                return [
+                    'title' => 'required|unique:posts|min:3',
+                    'description' => 'required',
+                    'content' => 'required',
+                    'published_at' => 'required',
+                    'image' => 'required|image',
+                ];
+
+            case 'PUT';
+            case 'PATCH';
+                return [
+                    'title' => 'required|min:3|unique:posts,title,'.$this->post->id,
+                    'description' => 'required',
+                    'content' => 'required',
+                    'published_at' => 'required',
+                    'image' => 'required|image',
+                ];
+
+            case 'GET';
+            case 'DELETE';
+            default:
+                return [];
+
+        }
     }
 }

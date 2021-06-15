@@ -34,14 +34,18 @@
 
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea class="form-control" name="content" cols="5" rows="5" id="content" style="resize: none;">{{ isset($post) ? $post->content : null }}</textarea>
+                    <input id="content" type="hidden" name="content" value="{{ isset($post) ? $post->content : null }}">
+                    <trix-editor input="content"></trix-editor>
                 </div>
 
                 <div class="form-group">
                     <label for="published_at">Published At</label>
-                    <input type="text" class="form-control" name="published_at" id="published_at">
+                    <input type="text" class="form-control" name="published_at" id="published_at" value="{{ isset($post) ? $post->published_at : null }}">
                 </div>
 
+                @if(isset($post))
+                    <img src="{{ url('storage/app/'.$post->image) }}" alt="Post Image" class="rounded" width="690">
+                @endif
                 <div class="form-group">
                     <label for="image">Image</label>
                     <input type="file" class="form-control" name="image" id="image">
@@ -54,4 +58,19 @@
         </div>
     </div>
 
+@endsection
+
+@section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#published_at", {
+            enableTime:true,
+        });
+    </script>
 @endsection

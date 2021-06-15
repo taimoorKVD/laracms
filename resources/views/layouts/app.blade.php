@@ -13,16 +13,11 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{-- CUSTOM CSS --}}
-    <style>
-
-    </style>
+    @yield('css')
 </head>
 <body>
     <div id="app">
@@ -97,6 +92,12 @@
                                     <a href="{{ route('categories.index') }}">Categories</a>
                                 </li>
                             </ul>
+
+                            <ul class="list-group mt-5">
+                                <li class="list-group-item">
+                                    <a href="{{ route('trashed-posts.index') }}">Trashed Posts</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-md-8">
                             @yield('content')
@@ -110,10 +111,12 @@
     </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 
 {{-- CUSTOM JS --}}
 @yield('scripts')
+
 <script>
     $(document).ready(function () {
         setTimeout(function(){

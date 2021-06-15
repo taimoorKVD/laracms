@@ -23,8 +23,18 @@
                             <td><img src="{{ url('storage/app/'.$post->image) }}" alt="Post Image" class="rounded" width="100"></td>
                             <td>{{ $post->title }}</td>
                             <td>
-                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm mr-2">Edit</a>
-                                <button class="btn btn-danger btn-sm mr-2" onclick="handleDelete( {{ $post->id }} )">Delete</button>
+                                <button class="btn btn-danger btn-sm mr-2 float-right" onclick="handleDelete( {{ $post->id }} )">
+                                    {{ $post->trashed() ? 'Delete' : 'Trash' }}
+                                </button>
+                                @if($post->trashed())
+                                    <form action="{{ route('restore-post', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-warning btn-sm mr-2 float-right" style="color: #f8fafc;">Restore</button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm mr-2 float-right" style="color: #f8fafc;">Edit</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -75,8 +85,9 @@
     <script>
         function handleDelete(id) {
             var form = document.getElementById('deletePostForm');
-            form.action = "/posts/"+id;
+            form.action = '{!! url('posts') !!}'+'/'+id;
             $('#deleteModal').modal('show');
         }
     </script>
+
 @endsection
