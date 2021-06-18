@@ -27,3 +27,10 @@ Route::middleware('auth')->group(function(){
     Route::resource('categories', 'CategoryController');
     Route::resource('tags', 'TagController');
 });
+
+Route::middleware(['auth','VerifyIsAdmin'])->group(function(){
+    Route::get('user/profile', 'UserController@edit')->name('user.profile');
+    Route::resource('users', 'UserController');
+    Route::post('users/{user}/make-admin', 'UserController@makeAdmin')->name('users.make-admin');
+
+});

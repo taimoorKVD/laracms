@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CheckCategoryRequest extends FormRequest
+class CheckUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,15 +27,14 @@ class CheckCategoryRequest extends FormRequest
 
             case 'POST':
                 return [
-                    'name' => 'required|min:3|unique:categories',
+                    'name' => 'required|min:3|unique:users',
                 ];
 
             case 'PUT':
             case 'PATCH':
 
                 return [
-                    'name' => 'required|min:3,unique:categories,name,'.$this->category->id,
-                    'about' => 'min:3|about,'.$this->category->id
+                    'name' => 'required|min:3,unique:users,name,'.$this->user->id,
                 ];
 
             case 'GET':
