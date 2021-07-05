@@ -38,6 +38,7 @@ class PostController extends Controller
         $post->description = request()->description;
         $post->content = request()->content;
         $post->category_id = request()->category_id;
+        $post->user_id = auth()->user()->id;
         $post->published_at = request()->published_at;
         $post->image = $image;
         $post->save();

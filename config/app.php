@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/laracms/public/'),
+    'url' => env('APP_URL', 'http://localhost/laracms/public'),
 
-    'asset_url' => env('ASSET_URL', 'http://localhost/laracms/public/'),
+    'asset_url' => env('ASSET_URL', 'http://localhost/laracms/public'),
 
     /*
     |--------------------------------------------------------------------------
